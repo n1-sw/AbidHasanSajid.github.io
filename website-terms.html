@@ -5,75 +5,204 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Website Terms and Conditions" />
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://abidhasansajid.me/" />
+        <meta property="og:title" content="Website Terms | Abid Hasan Sajid" />
+        <meta property="og:description" content="Website Terms and Conditions for using Abid Hasan Sajid's portfolio website." />
+        <meta property="og:image" content="img/hero-avatar.png" />
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://abidhasansajid.me/" />
+        <meta name="twitter:title" content="Website Terms | Abid Hasan Sajid" />
+        <meta name="twitter:description" content="Website Terms and Conditions for using Abid Hasan Sajid's portfolio website." />
+        <meta name="twitter:image" content="img/hero-avatar.png" />
+        <meta name="twitter:creator" content="@n1_yvl" />
+        
+        <meta name="theme-color" content="#6366f1" />
         <title>Website Terms | Abid Hasan Sajid</title>
         <link rel="icon" type="image/png" href="img/favicon.png">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <link rel="stylesheet" href="css/main.css" />
         <style>
-            .legal-page {
-                max-width: 900px;
-                margin: 0 auto;
-                padding: 4rem 2rem;
-                min-height: 100vh;
+            body {
+                background: var(--color-bg-primary);
+                position: relative;
+                overflow-x: hidden;
             }
+            
+            .legal-page {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 6rem 3rem;
+                min-height: 100vh;
+                position: relative;
+                z-index: 2;
+            }
+            
+            .legal-container {
+                background: rgba(26, 31, 58, 0.6);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(0, 240, 255, 0.2);
+                border-radius: 2.5rem;
+                padding: 5rem 4rem;
+                box-shadow: var(--shadow-neon), var(--shadow-xl);
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .legal-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, var(--color-cyber), var(--color-neon-purple), var(--color-neon-pink), var(--color-cyber));
+                background-size: 200% 100%;
+                animation: holographic 3s linear infinite;
+            }
+            
             .legal-page h1 {
-                font-size: 3.5rem;
-                margin-bottom: 1rem;
-                background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+                font-size: 4.5rem;
+                margin-bottom: 1.5rem;
+                background: linear-gradient(135deg, var(--color-cyber), var(--color-neon-purple), var(--color-neon-pink));
+                background-size: 200% 200%;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
+                animation: holographic 3s ease infinite;
+                text-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
             }
+            
             .legal-page h2 {
-                font-size: 2.2rem;
-                margin-top: 3rem;
-                margin-bottom: 1.5rem;
-                color: var(--color-primary);
+                font-size: 2.6rem;
+                margin-top: 4rem;
+                margin-bottom: 2rem;
+                color: var(--color-cyber);
+                text-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+                position: relative;
+                padding-left: 2rem;
             }
+            
+            .legal-page h2::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(180deg, var(--color-cyber), var(--color-neon-purple));
+                box-shadow: 0 0 10px var(--color-cyber);
+            }
+            
             .legal-page h3 {
-                font-size: 1.8rem;
-                margin-top: 2rem;
-                margin-bottom: 1rem;
-                color: var(--color-white);
+                font-size: 2rem;
+                margin-top: 2.5rem;
+                margin-bottom: 1.2rem;
+                color: var(--color-neon-purple);
+                text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
             }
+            
             .legal-page p {
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.8rem;
+                line-height: 2;
+                color: var(--color-text);
+                font-size: 1.6rem;
+            }
+            
+            .legal-page ul {
+                list-style: none;
+                margin-left: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .legal-page li {
+                margin-bottom: 1rem;
                 line-height: 1.8;
                 color: var(--color-text);
+                position: relative;
+                padding-left: 2.5rem;
             }
-            .legal-page ul {
-                list-style: disc;
-                margin-left: 2rem;
-                margin-bottom: 1.5rem;
+            
+            .legal-page li::before {
+                content: '▹';
+                position: absolute;
+                left: 0;
+                color: var(--color-cyber);
+                font-size: 2rem;
+                text-shadow: 0 0 10px var(--color-cyber);
             }
-            .legal-page li {
-                margin-bottom: 0.8rem;
-                line-height: 1.7;
-                color: var(--color-text);
-            }
+            
             .back-link {
                 display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
-                color: var(--color-primary);
+                gap: 1rem;
+                padding: 1.2rem 2.5rem;
+                background: rgba(0, 240, 255, 0.1);
+                border: 2px solid var(--color-cyber);
+                border-radius: 1rem;
+                color: var(--color-cyber);
                 font-weight: 600;
-                margin-bottom: 2rem;
+                margin-bottom: 3rem;
                 transition: all 0.3s ease;
+                text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+                box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
             }
+            
             .back-link:hover {
-                color: var(--color-accent);
-                transform: translateX(-5px);
+                background: rgba(0, 240, 255, 0.2);
+                transform: translateX(-8px);
+                box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
             }
+            
             .updated-date {
                 color: var(--color-text-secondary);
                 font-style: italic;
-                margin-bottom: 2rem;
+                margin-bottom: 3rem;
+                font-size: 1.4rem;
+            }
+            
+            .legal-summary {
+                background: rgba(139, 92, 246, 0.1);
+                border: 2px solid var(--color-neon-purple);
+                padding: 3rem;
+                margin: 3rem 0;
+                border-radius: 1.5rem;
+                box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+            }
+            
+            .legal-summary h3 {
+                margin-top: 0;
+            }
+            
+            @media (max-width: 768px) {
+                .legal-page {
+                    padding: 4rem 2rem;
+                }
+                .legal-container {
+                    padding: 3rem 2rem;
+                }
+                .legal-page h1 {
+                    font-size: 3.2rem;
+                }
             }
         </style>
     </head>
     <body>
+        <div class="cyber-grid-bg"></div>
+        <div class="particles-bg" id="particles-bg"></div>
         <div class="legal-page">
-            <a href="index.html" class="back-link">← Back to Home</a>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <div class="legal-container">
             
             <h1>Website Terms</h1>
             <p class="updated-date">Last Updated: October 26, 2025</p>
@@ -284,8 +413,8 @@
             <h2>16. Entire Agreement</h2>
             <p>These Website Terms, along with the Terms of Service and Discord Selling Info, constitute the entire agreement between you and Abid Hasan Sajid regarding the use of this website.</p>
 
-            <div style="margin-top: 4rem; padding: 2rem; background: var(--color-bg-secondary); border-radius: 1rem;">
-                <h3 style="color: var(--color-primary); margin-bottom: 1rem;">📋 Summary</h3>
+            <div class="legal-summary">
+                <h3>📋 Summary</h3>
                 <p><strong>In simple terms:</strong> Use the website respectfully, don't try to hack or steal content, respect intellectual property, and understand that I'm providing this portfolio website to showcase work and offer services. Your privacy is protected, and I'm not responsible for issues beyond my reasonable control.</p>
             </div>
 
@@ -294,6 +423,26 @@
                     © 2025 Abid Hasan Sajid. All rights reserved.
                 </p>
             </div>
+            </div>
         </div>
+        
+        <script>
+        function initParticles() {
+            const particlesBg = document.getElementById("particles-bg");
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                const size = Math.random() * 3 + 1;
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
+                particle.style.left = Math.random() * 100 + "%";
+                particle.style.animationDuration = Math.random() * 10 + 10 + "s";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                particlesBg.appendChild(particle);
+            }
+        }
+        initParticles();
+        </script>
     </body>
 </html>

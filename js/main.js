@@ -712,5 +712,211 @@ statBoxes.forEach((box) => {
     aboutStatsObserver.observe(box);
 });
 
+class ChatbotController {
+    constructor() {
+        this.panel = document.getElementById("chatbot-panel");
+        this.bubble = document.getElementById("chatbot-bubble");
+        this.closeBtn = document.getElementById("chatbot-close");
+        this.messagesContainer = document.getElementById("chatbot-messages");
+        this.inputField = document.getElementById("chatbot-input");
+        this.sendBtn = document.getElementById("chatbot-send");
+        this.typingIndicator = document.getElementById("chatbot-typing");
+        this.notification = document.getElementById("chatbot-notification");
+        
+        this.isOpen = false;
+        this.messageCount = 0;
+        this.lastUserMessage = "";
+        
+        this.responses = {
+            greetings: [
+                "Hello! How can I assist you today? 😊",
+                "Hi there! What would you like to know?",
+                "Hey! I'm here to help. What's on your mind?"
+            ],
+            portfolio: [
+                "Sajid is a talented web developer from Bangladesh! He specializes in modern web design and UI/UX. Check out the portfolio section above to see his work! ✨",
+                "You can explore Sajid's projects and skills in the About section. He's passionate about creating beautiful, responsive websites! 💻"
+            ],
+            discord: [
+                "Yes! Sajid offers Discord Nitro, server boosts, and custom effects. Scroll to the shop section to see all available products! 🎮",
+                "Discord products are available including Nitro and Effects! Check out the shop section for pricing and details. 💎"
+            ],
+            shop: [
+                "The shop offers Discord Nitro, Server Boosts, Profile Effects, and more! All payments are via cryptocurrency (BTC, LTC, ETH). 💰",
+                "You can purchase various Discord products! Scroll down to the shop section to see everything available. Crypto payments accepted! 🚀"
+            ],
+            contact: [
+                "You can reach out through the contact form at the bottom of the page! Sajid typically responds within 24 hours. 📧",
+                "Great! Let me take you to the contact section...",
+                "Feel free to use the contact form below to get in touch with Sajid directly! 💬"
+            ],
+            price: [
+                "Prices vary by product! Check the shop section below for detailed pricing on Discord Nitro, boosts, and effects. All transactions are in cryptocurrency! 💵",
+                "Product prices are listed in the shop section! Scroll down to see the full catalog with crypto payment options. 📊"
+            ],
+            help: [
+                "I can help you with:\n• Sajid's portfolio and skills\n• Discord products and shop\n• Contact information\n• General questions\n\nWhat would you like to know? 🤔",
+                "I'm here to guide you! You can ask about Sajid's work, Discord products, or how to get in touch. What interests you? 💡"
+            ],
+            thanks: [
+                "You're welcome! Is there anything else I can help you with? 😊",
+                "Happy to help! Feel free to ask if you have more questions! ✨",
+                "Anytime! Don't hesitate to reach out if you need more information! 🙌"
+            ],
+            default: [
+                "That's a great question! For specific inquiries, I recommend using the contact form below to reach Sajid directly. 📬",
+                "Hmm, I'm not quite sure about that! You might want to contact Sajid directly through the form below for detailed information. 💭",
+                "Interesting! For the most accurate answer, please use the contact section to message Sajid. He'll get back to you soon! 🎯"
+            ]
+        };
+        
+        this.init();
+    }
+    
+    init() {
+        this.bubble.addEventListener("click", () => this.toggle());
+        this.closeBtn.addEventListener("click", () => this.close());
+        this.sendBtn.addEventListener("click", () => this.sendMessage());
+        this.inputField.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") this.sendMessage();
+        });
+        
+        setTimeout(() => {
+            if (!this.isOpen && this.notification) {
+                this.notification.style.display = "flex";
+            }
+        }, 3000);
+    }
+    
+    toggle() {
+        if (this.isOpen) {
+            this.close();
+        } else {
+            this.open();
+        }
+    }
+    
+    open() {
+        this.isOpen = true;
+        this.panel.classList.add("chatbot-panel--open");
+        if (this.notification) {
+            this.notification.style.display = "none";
+        }
+        this.inputField.focus();
+        this.scrollToBottom();
+    }
+    
+    close() {
+        this.isOpen = false;
+        this.panel.classList.remove("chatbot-panel--open");
+    }
+    
+    sendMessage() {
+        const message = this.inputField.value.trim();
+        if (!message || message.length === 0) return;
+        
+        this.addUserMessage(message);
+        this.lastUserMessage = message.toLowerCase();
+        this.inputField.value = "";
+        
+        this.showTyping();
+        setTimeout(() => {
+            this.hideTyping();
+            this.addBotResponse(message.toLowerCase());
+            this.messageCount++;
+            
+            if (this.messageCount >= 3 && this.lastUserMessage.includes("contact")) {
+                setTimeout(() => {
+                    this.scrollToContact();
+                }, 1000);
+            }
+        }, 1500 + Math.random() * 1000);
+    }
+    
+    addUserMessage(text) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "chatbot-message chatbot-message--user";
+        messageDiv.innerHTML = `<div class="chatbot-message__bubble">${this.escapeHtml(text)}</div>`;
+        this.messagesContainer.appendChild(messageDiv);
+        this.scrollToBottom();
+    }
+    
+    addBotMessage(text) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = "chatbot-message chatbot-message--bot";
+        messageDiv.innerHTML = `<div class="chatbot-message__bubble">${text}</div>`;
+        this.messagesContainer.appendChild(messageDiv);
+        this.scrollToBottom();
+    }
+    
+    addBotResponse(userMessage) {
+        let response;
+        
+        if (this.matchKeywords(userMessage, ["hi", "hello", "hey", "sup", "yo"])) {
+            response = this.getRandomResponse("greetings");
+        } else if (this.matchKeywords(userMessage, ["portfolio", "work", "project", "skill", "about"])) {
+            response = this.getRandomResponse("portfolio");
+        } else if (this.matchKeywords(userMessage, ["discord", "nitro", "boost", "effect"])) {
+            response = this.getRandomResponse("discord");
+        } else if (this.matchKeywords(userMessage, ["shop", "buy", "purchase", "product", "sell"])) {
+            response = this.getRandomResponse("shop");
+        } else if (this.matchKeywords(userMessage, ["contact", "email", "reach", "message", "talk"])) {
+            response = this.getRandomResponse("contact");
+        } else if (this.matchKeywords(userMessage, ["price", "cost", "how much", "payment", "pay"])) {
+            response = this.getRandomResponse("price");
+        } else if (this.matchKeywords(userMessage, ["help", "what can", "assist", "support"])) {
+            response = this.getRandomResponse("help");
+        } else if (this.matchKeywords(userMessage, ["thank", "thanks", "appreciate"])) {
+            response = this.getRandomResponse("thanks");
+        } else {
+            response = this.getRandomResponse("default");
+        }
+        
+        this.addBotMessage(response);
+    }
+    
+    matchKeywords(message, keywords) {
+        return keywords.some(keyword => message.includes(keyword));
+    }
+    
+    getRandomResponse(category) {
+        const responses = this.responses[category];
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+    
+    showTyping() {
+        this.typingIndicator.style.display = "block";
+        this.scrollToBottom();
+    }
+    
+    hideTyping() {
+        this.typingIndicator.style.display = "none";
+    }
+    
+    scrollToBottom() {
+        setTimeout(() => {
+            this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        }, 100);
+    }
+    
+    scrollToContact() {
+        this.close();
+        window.location.href = "#contact";
+    }
+    
+    escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
+}
+
+const chatbot = new ChatbotController();
+
 console.log("✨ Modern Portfolio initialized successfully!");
 console.log("🚀 All features loaded and ready!");
